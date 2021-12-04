@@ -58,7 +58,20 @@ Cuando un conjunto de usuarios consulta un enésimo número (superior a 1000000)
     * 1060000
     * 1070000
     * 1080000
-    * 1090000    
+    * 1090000
+   
+   **Registro B1ls**  
+   
+   ![](images/part1/reg1.png)
+   ![](images/part1/1.png)
+   ![](images/part1/2.png)  
+   **Registro B2ms**  
+   
+   ![](images/part1/reg2.png)
+   ![](images/part1/2.1.png)
+   ![](images/part1/2.2.png)  
+   
+
 
 8. Dírijase ahora a Azure y verifique el consumo de CPU para la VM. (Los resultados pueden tardar 5 minutos en aparecer).
 
@@ -81,23 +94,52 @@ Cuando un conjunto de usuarios consulta un enésimo número (superior a 1000000)
 
 11. Una vez el cambio se vea reflejado, repita el paso 7, 8 y 9.
 12. Evalue el escenario de calidad asociado al requerimiento no funcional de escalabilidad y concluya si usando este modelo de escalabilidad logramos cumplirlo.
+
+   * Se logro el requerimiento y mejoramos la escalabilidad, ya que tanto el tiempo de ejecucion como el porcentaje de uso de CPU se logra reducir considerablemente  
+   
 13. Vuelva a dejar la VM en el tamaño inicial para evitar cobros adicionales.
+
 
 **Preguntas**
 
 1. ¿Cuántos y cuáles recursos crea Azure junto con la VM?
+   * Red virtual
+   * Direccion ip publica
+   * Grupo de seguridad de red
+   * interfaz de red
+   * Disco
 2. ¿Brevemente describa para qué sirve cada recurso?
+   * Red virtual: Bloque de creacion fundamental de una red privada en Azure, que permite muchos tipos de recursos, como las VM
+   * Direccion ip publica: Identificador que se asigna al conectarse a la red
+   * Grupo de seguridad de red: Sirve para filtrar el trafico de red desde y hacia los recursos de Azure de una red virtual
+   * interfaz de red: Permite que una VM de Azure se comunique con los recursos de internet a Azure y locales
+   * Disco: Almaceamiento de la VM
 3. ¿Al cerrar la conexión ssh con la VM, por qué se cae la aplicación que ejecutamos con el comando `npm FibonacciApp.js`? ¿Por qué debemos crear un *Inbound port rule* antes de acceder al servicio?
-4. Adjunte tabla de tiempos e interprete por qué la función tarda tando tiempo.
-5. Adjunte imágen del consumo de CPU de la VM e interprete por qué la función consume esa cantidad de CPU.
+   * Porque estamos cortando la comunicacion por el puerto 22 que es por donde nos estabamos comunicando con la aplicacion, al crear la regla, esta,os permitiendo que la comunicacion sea por otro puerto (3000 en nuestro caso) 
+4. Adjunte tabla de tiempos e interprete por qué la función tarda tando tiempo.  
+   ![](images/part1/reg1.png)
+   ![](images/part1/reg2.png)  
+   Por que estabamos haciendo consultas con valores iguales o superiores a 1000000 de forma concurrente.
+
+5. Adjunte imágen del consumo de CPU de la VM e interprete por qué la función consume esa cantidad de CPU.  
+   ![](images/part1/1.png)
+   ![](images/part1/2.1.png)  
+   La razon en el primer caso, es porque la consulta a la funcion de Fibonacci al ser un valor tan alto (7 cifras), somote a la CPU a esa cantidad de consumo, al ampliar la capacidad de la CPU, obervamos (en la segunda imagen) como el uso de la CPU disminuye
+
 6. Adjunte la imagen del resumen de la ejecución de Postman. Interprete:
     * Tiempos de ejecución de cada petición.
     * Si hubo fallos documentelos y explique.
 7. ¿Cuál es la diferencia entre los tamaños `B2ms` y `B1ls` (no solo busque especificaciones de infraestructura)?
+   * La capacidad de B2ms duplican (o incluso mas) las capacidades de B1ls (8GB de RAM vs 0.5GB, v2cpu vs v1cpu) 
+
 8. ¿Aumentar el tamaño de la VM es una buena solución en este escenario?, ¿Qué pasa con la FibonacciApp cuando cambiamos el tamaño de la VM?
+   * Si ya que reducimos de manera considerable el tiempo necesario para cada request a FibonacciApp
 9. ¿Qué pasa con la infraestructura cuando cambia el tamaño de la VM? ¿Qué efectos negativos implica?
+   * Mayor costo mensual en la infraestructura como tal
 10. ¿Hubo mejora en el consumo de CPU o en los tiempos de respuesta? Si/No ¿Por qué?
+   * Hubo una reduccion en el consumo de CPU debido a la mejora en capacidad
 11. Aumente la cantidad de ejecuciones paralelas del comando de postman a `4`. ¿El comportamiento del sistema es porcentualmente mejor?
+   * Si se logra una mejora en los tiempos al aumentar el numero de peticiones paralelas
 
 ### Parte 2 - Escalabilidad horizontal
 
