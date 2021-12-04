@@ -228,12 +228,28 @@ newman run ARSW_LOAD-BALANCING_AZURE.postman_collection.json -e [ARSW_LOAD-BALAN
 **Preguntas**
 
 * ¿Cuáles son los tipos de balanceadores de carga en Azure y en qué se diferencian?, ¿Qué es SKU, qué tipos hay y en qué se diferencian?, ¿Por qué el balanceador de carga necesita una IP pública?
+* R: Existen dos tipos de balanceadores de carga: publico y privado, el primero proporciona conexiones para las VM dentro de la red virtual, la segunda se usa cuando se necesitan direcciones IP privadas solo en el front-end, tambien se usa para equilibrar la carga de trafico dentro de la red virtual.   
+* Un SKU representa una Unidad de Mantenimiento de Stock (SKU) adquirible bajo un producto. Representan las diferentes formas del producto, esisten tres tipos:
+* Load Balancer estándar: Equipado para equilibrar la carga del tráfico de la capa de red cuando se necesita un alto rendimiento y una latencia muy baja.
+* Gateway Load Balancer: Permite escenarios que necesitan encadenamiento de servicios, como análisis, DDoS en línea, firewall, etc.
+* Load Balancer básico: Para las aplicaciones a pequeña escala que no necesitan alta disponibilidad o redundancia, elija el nivel Básico.
+* Se necesita poque este equilibrador de carga se creo de tipo publico, y lo que necesita es equilibrar las carga del trafico de internet en las maquinas virtuales
 * ¿Cuál es el propósito del *Backend Pool*?
+* Define el grupo de recursos que brindara trafico para una regla de equilibrio de carga determinada
 * ¿Cuál es el propósito del *Health Probe*?
+* Determina si la instancia esta en buen estado y puede recibir trafico
 * ¿Cuál es el propósito de la *Load Balancing Rule*? ¿Qué tipos de sesión persistente existen, por qué esto es importante y cómo puede afectar la escalabilidad del sistema?.
+* Se usa para definier como se distribuye el trafico entrante a todas las instancias desde el grupo de backend
 * ¿Qué es una *Virtual Network*? ¿Qué es una *Subnet*? ¿Para qué sirven los *address space* y *address range*?
+* Una Virtual Network es el bloque de creacion de una red privada en Azure que permite muchos tipos de recursos que estan en Azure, para comunicarse de forma segura entre los usuarios y entre las redes locales
+* Una Subnet es un rango de direcciones logicas, normalmente surjen luego de dividir una red demasiado grandes en subredes
+* El address range sirve para determinar el rango de direcciones logicas dentro de la red
+* El address space es el enmascaramiento de subred de longitud variable
 * ¿Qué son las *Availability Zone* y por qué seleccionamos 3 diferentes zonas?. ¿Qué significa que una IP sea *zone-redundant*?
+* Son datacenters fisicos y logicos separados con su propio power source, network, seleccionamos 3 para cada una de las maquinas virtuales
+* Una IP zone-redundant es una ip que puede sobrevivir a una o mas fallas de zona, siempre al menos que halla una que este sana
 * ¿Cuál es el propósito del *Network Security Group*?
+* Sirve para filtrar el trafico de red desde y hacia los recursos de Azure de una red virtual
 * Informe de newman 1 (Punto 2)
 * Presente el Diagrama de Despliegue de la solución.
 
